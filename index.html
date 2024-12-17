@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shape Drawer</title>
+    <style>
+        canvas {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="drawingCanvas" width="500" height="500"></canvas>
+    <input type="number" id="sides" placeholder="Enter number of sides">
+    <input type="number" id="repetitions" placeholder="Enter number of repetitions">
+    <button onclick="drawShape()">Draw Shape</button>
+
+    <script>
+        function drawShape() {
+            const sides = parseInt(document.getElementById('sides').value);
+            const repetitions = parseInt(document.getElementById('repetitions').value);
+            const canvas = document.getElementById('drawingCanvas');
+            const ctx = canvas.getContext('2d');
+            ctx.clearRect(0, 0, canvas.width, canvas.height); 
+
+            const angle = 2 * Math.PI / sides;
+            const radius = 100; 
+
+            for (let i = 0; i < repetitions; i++) {
+                ctx.beginPath();
+                ctx.moveTo(canvas.width / 2, canvas.height / 2); 
+                for (let j = 0; j < sides; j++) {
+                    ctx.lineTo(
+                        canvas.width / 2 + radius * Math.cos(angle * j + (i * 2 * Math.PI / repetitions)),
+                        canvas.height / 2 + radius * Math.sin(angle * j + (i * 2 * Math.PI / repetitions))
+                    );
+                }
+                ctx.closePath();
+                ctx.stroke();
+            }
+        }
+    </script>
+</body>
+</html>
